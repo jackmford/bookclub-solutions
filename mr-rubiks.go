@@ -4,6 +4,7 @@ import (
   "bufio"
   "fmt"
   "os"
+  "strconv"
   "strings"
 )
 
@@ -22,11 +23,21 @@ func main() {
     defer file.Close()
 
     fileScanner := bufio.NewScanner(file)
-
     fileScanner.Split(bufio.ScanLines)
+    diary := Diary {
+      Walk: 0,
+      Sort: 0,
+      Clean: 0,
+    }
 
     for fileScanner.Scan() {
       line := fileScanner.Text()
-      fmt.Println(strings.Split(line, " ")[1])
+      task := strings.Split(line, " ")[1]
+      value, _ := strconv.Atoi(strings.Split(line, " ")[3])
+      if task == "Clean" {
+        fmt.Println(value)
+        diary.Clean += value
+      }
+
     }
 }
