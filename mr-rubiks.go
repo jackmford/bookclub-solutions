@@ -35,9 +35,29 @@ func main() {
       task := strings.Split(line, " ")[1]
       value, _ := strconv.Atoi(strings.Split(line, " ")[3])
       if task == "Clean" {
-        fmt.Println(value)
         diary.Clean += value
+        if diary.Clean < 0 {
+          diary.Clean = 0
+        }
       }
-
+      if task == "Walk" {
+        diary.Walk += value
+        if diary.Walk < 0 {
+          diary.Walk = 0
+        }
+      }
+      if task == "Sort" {
+        diary.Sort += value
+        if diary.Sort < 0 {
+          diary.Sort = 0
+        }
+      }
     }
+
+    walks := strings.Repeat("*", diary.Walk)
+    cleans := strings.Repeat("*", diary.Clean)
+    sorts := strings.Repeat("*", diary.Sort)
+    // These are not lined up correctly. 
+    fmt.Println("walk, clean, sort")
+    fmt.Printf("[%s] [%s] [%s]\n", walks, cleans, sorts)
 }
