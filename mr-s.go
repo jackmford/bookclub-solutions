@@ -23,8 +23,10 @@ func main() {
     fileScanner.Scan()
     total_hrs := 0
     total_mins := 0
+    days := 0 
 
     for fileScanner.Scan() {
+        days = days+1
         line := fileScanner.Text()
         fmt.Println(line)
         am_hour := strings.Split(line, " ")[0]
@@ -60,12 +62,21 @@ func main() {
         if am_or_pm_to_bed == "AM," && am_or_pm_to_rise == "AM" {
             total_hrs = total_hrs+(pm_hour_int-am_hour_int)
         }
+
+        if am_or_pm_to_bed == "AM," && am_or_pm_to_rise == "PM" {
+            total_hrs = total_hrs+(pm_hour_int-am_hour_int)
+            total_hrs = total_hrs+(12-am_hour_int+pm_hour_int)
+        }
+
         fmt.Println(am_hour_int)
         fmt.Println(pm_hour_int)
         fmt.Println(total_hrs)
         fmt.Println(total_mins)
-        total_time := (total_hrs*60+total_mins)/60
+        var total_time float64
+        total_time = float64((total_hrs*60+total_mins))/float64(60)
+        total_time = total_time/float64(days)
         fmt.Println(total_time)
+        fmt.Printf("%.1f hours", total_time)
 
     }
 }
